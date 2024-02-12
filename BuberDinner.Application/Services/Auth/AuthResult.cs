@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuberDinner.Application.Auth
+namespace BuberDinner.Application.Services.Auth
 {
     public record AuthResult(
         Guid Id,

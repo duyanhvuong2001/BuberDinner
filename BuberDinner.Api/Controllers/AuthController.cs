@@ -1,4 +1,4 @@
-﻿using BuberDinner.Application.Auth;
+﻿using BuberDinner.Application.Services.Auth;
 using BuberDinner.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
 

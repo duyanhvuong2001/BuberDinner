@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 //Dependency Injection
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
