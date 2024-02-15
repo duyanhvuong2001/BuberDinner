@@ -1,6 +1,4 @@
-using BuberDinner.Api.Errors;
-using BuberDinner.Api.Filters;
-using BuberDinner.Api.Middlewares;
+using BuberDinner.Api.Common.Errors;
 using BuberDinner.Application;
 using BuberDinner.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -20,10 +18,6 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
-
-//Middlewares
-//app.UseMiddleware<ErrorHandlingMiddleware>();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

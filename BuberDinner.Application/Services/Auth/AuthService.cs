@@ -1,12 +1,9 @@
-﻿using BuberDinner.Application.Common.Interfaces.Auth;
+﻿using BuberDinner.Application.Common.Errors;
+using BuberDinner.Application.Common.Interfaces.Auth;
 using BuberDinner.Application.Common.Interfaces.Persistence;
+using BuberDinner.Domain.Common.Errors;
 using BuberDinner.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using ErrorOr;
 namespace BuberDinner.Application.Services.Auth
 {
     public class AuthService : IAuthService
@@ -20,18 +17,18 @@ namespace BuberDinner.Application.Services.Auth
             _userRepository = userRepository;
         }
 
-        public AuthResult Login(string email, string password)
+        public ErrorOr<AuthResult> Login(string email, string password)
         {
             //Validate if user exists
             if (_userRepository.GetUserByEmail(email) is not User user)
             {
-                throw new Exception("User with given email doesnt exist");
+                return Errors.Auth.InvalidCredentials;
             }
 
             //Validate if password is correct
             if (user.Password != password)
             {
-                throw new Exception("Wrong password");
+                return Errors.Auth.InvalidCredentials;
             }
 
             //Create new JWT Token
@@ -40,12 +37,12 @@ namespace BuberDinner.Application.Services.Auth
             return new AuthResult(user, token);
         }
 
-        public AuthResult Register(string firstname, string lastname, string email, string password)
+        public ErrorOr<AuthResult> Register(string firstname, string lastname, string email, string password)
         {
             //Validate user doesnt exist
             if (_userRepository.GetUserByEmail(email) is not null)
             {
-                throw new Exception("User with given email already exists");
+                return Errors.User.DuplicateEmail;
             }
 
             //Create user (generate UID) & persist to db

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ErrorOr;
+
 
 namespace BuberDinner.Application.Services.Auth
 {
     public interface IAuthService
     {
-        AuthResult Register(string firstname, string lastname, string email, string password);
+        ErrorOr<AuthResult> Register(string firstname, string lastname, string email, string password);
 
-        AuthResult Login(string email, string password);
+        ErrorOr<AuthResult> Login(string email, string password);
     }
 }

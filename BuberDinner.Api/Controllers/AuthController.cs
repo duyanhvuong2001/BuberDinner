@@ -1,13 +1,16 @@
 ﻿using BuberDinner.Application.Services.Auth;
 using BuberDinner.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using FluentResults;
+using BuberDinner.Application.Common.Errors;
+using ErrorOr;
 
 namespace BuberDinner.Api.Controllers
 {
-    [ApiController]
+
     [Route("/api/[controller]")]
 
-    public class AuthController : Controller
+    public class AuthController : ApiController
     {
         private readonly IAuthService _authService;
 
@@ -19,11 +22,17 @@ namespace BuberDinner.Api.Controllers
         [HttpPost("/register")]
         public IActionResult Register(RegisterRequest registerRequest)
         {
-            var authResult = _authService.Register(registerRequest.FirstName, registerRequest.LastName, registerRequest.Email, registerRequest.Password);
+            ErrorOr<AuthResult> authResult = _authService.Register(registerRequest.FirstName, registerRequest.LastName, registerRequest.Email, registerRequest.Password);
 
-            var response = new AuthResponse(authResult.User.Id, authResult.User.FirstName, authResult.User.LastName, authResult.User.Email, authResult.Token);
+            return authResult.Match(
+                authResult => Ok(MapAuthResult(authResult)),
+                errors => Problem(errors)
+                );
+        }
 
-            return Ok(response);
+        private static AuthResponse MapAuthResult(AuthResult authResult)
+        {
+            return new AuthResponse(authResult.User.Id, authResult.User.FirstName, authResult.User.LastName, authResult.User.Email, authResult.Token);
         }
 
         [HttpPost("/login")]
@@ -31,8 +40,10 @@ namespace BuberDinner.Api.Controllers
         {
             var authResult = _authService.Login(loginRequest.Email, loginRequest.Password);
 
-            var response = new AuthResponse(authResult.User.Id, authResult.User.FirstName, authResult.User.LastName, authResult.User.Email, authResult.Token);
-            return Ok(response);
+            return authResult.Match(
+                authResult => Ok(MapAuthResult(authResult)),
+                errors => Problem(errors)
+                );
         }
     }
 
