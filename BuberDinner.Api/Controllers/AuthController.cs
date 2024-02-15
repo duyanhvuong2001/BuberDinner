@@ -1,9 +1,11 @@
-﻿using BuberDinner.Application.Services.Auth;
-using BuberDinner.Contracts.Authentication;
+﻿using BuberDinner.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using FluentResults;
-using BuberDinner.Application.Common.Errors;
 using ErrorOr;
+using MediatR;
+using BuberDinner.Application.Auth.Common;
+using BuberDinner.Application.Auth.Commands.Register;
+using BuberDinner.Application.Auth.Queries.Login;
+using BuberDinner.Domain.Common.Errors;
 
 namespace BuberDinner.Api.Controllers
 {
@@ -12,17 +14,19 @@ namespace BuberDinner.Api.Controllers
 
     public class AuthController : ApiController
     {
-        private readonly IAuthService _authService;
+        private readonly ISender _mediator;
 
-        public AuthController(IAuthService authService)
+        public AuthController(ISender mediator)
         {
-            _authService = authService;
+            _mediator = mediator;
         }
 
         [HttpPost("/register")]
-        public IActionResult Register(RegisterRequest registerRequest)
+        public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
-            ErrorOr<AuthResult> authResult = _authService.Register(registerRequest.FirstName, registerRequest.LastName, registerRequest.Email, registerRequest.Password);
+            var command = new RegisterCommand(registerRequest.FirstName, registerRequest.LastName, registerRequest.Email, registerRequest.Password);
+
+            ErrorOr<AuthResult> authResult = await _mediator.Send(command);
 
             return authResult.Match(
                 authResult => Ok(MapAuthResult(authResult)),
@@ -36,9 +40,14 @@ namespace BuberDinner.Api.Controllers
         }
 
         [HttpPost("/login")]
-        public IActionResult Login(LoginRequest loginRequest)
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var authResult = _authService.Login(loginRequest.Email, loginRequest.Password);
+            var authResult = await _mediator.Send(new LoginQuery(loginRequest.Email, loginRequest.Password));
+
+            if (authResult.IsError && authResult.FirstError == Errors.Auth.InvalidCredentials)
+            {
+                return Problem(statusCode: StatusCodes.Status401Unauthorized, title: authResult.FirstError.Description);
+            }
 
             return authResult.Match(
                 authResult => Ok(MapAuthResult(authResult)),
@@ -46,5 +55,4 @@ namespace BuberDinner.Api.Controllers
                 );
         }
     }
-
 }

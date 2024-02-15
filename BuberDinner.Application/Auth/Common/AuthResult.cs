@@ -1,6 +1,6 @@
 ﻿using BuberDinner.Domain.Entities;
 
-namespace BuberDinner.Application.Services.Auth
+namespace BuberDinner.Application.Auth.Common
 {
     public record AuthResult(
         User User,
