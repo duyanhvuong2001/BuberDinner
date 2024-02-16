@@ -6,12 +6,13 @@ using BuberDinner.Application.Auth.Common;
 using BuberDinner.Application.Auth.Commands.Register;
 using BuberDinner.Application.Auth.Queries.Login;
 using BuberDinner.Domain.Common.Errors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuberDinner.Api.Controllers
 {
 
     [Route("/api/[controller]")]
-
+    [AllowAnonymous]
     public class AuthController : ApiController
     {
         private readonly ISender _mediator;
@@ -21,7 +22,7 @@ namespace BuberDinner.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
             var command = new RegisterCommand(registerRequest.FirstName, registerRequest.LastName, registerRequest.Email, registerRequest.Password);
@@ -39,7 +40,7 @@ namespace BuberDinner.Api.Controllers
             return new AuthResponse(authResult.User.Id, authResult.User.FirstName, authResult.User.LastName, authResult.User.Email, authResult.Token);
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
             var authResult = await _mediator.Send(new LoginQuery(loginRequest.Email, loginRequest.Password));

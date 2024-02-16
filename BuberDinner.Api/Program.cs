@@ -13,7 +13,7 @@ builder.Services.AddSingleton<ProblemDetailsFactory, BuberDinnerProblemDetailsFa
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Dependency Injection
+//Dependency Injection of layers
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -30,8 +30,8 @@ app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
