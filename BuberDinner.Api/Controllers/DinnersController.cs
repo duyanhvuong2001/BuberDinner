@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BuberDinner.Api.Controllers
 {
     [Route("/api/[controller]")]
-    [Authorize]
+
     public class DinnersController : ApiController
     {
         [HttpGet]
