@@ -4,8 +4,8 @@ using BuberDinner.Domain.Common.ValueObjects;
 using BuberDinner.Domain.Dinner.ValueObjects;
 using BuberDinner.Domain.Guest.Entities;
 using BuberDinner.Domain.Guest.ValueObjects;
-using BuberDinner.Domain.Menu.ValueObjects;
 using BuberDinner.Domain.MenuReview.ValueObjects;
+using BuberDinner.Domain.User.ValueObjects;
 
 namespace BuberDinner.Domain.Guest
 {
