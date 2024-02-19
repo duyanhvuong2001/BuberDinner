@@ -10,11 +10,11 @@ namespace BuberDinner.Domain.Menu
 {
     public sealed class Menu : AggregateRoot<MenuId>
     {
-        private readonly List<MenuSection> _sections = new();
+        private readonly List<MenuSection> _sections;
         private readonly List<DinnerId> _dinnerIds = new();
         private readonly List<MenuReviewId> _menuReviewIds = new();
 
-        private Menu(MenuId menuId, string name, string description, AverageRating averageRating, HostId hostId, DateTime createdDateTime, DateTime updatedDateTime) : base(menuId)
+        private Menu(MenuId menuId, string name, string description, AverageRating averageRating, HostId hostId, DateTime createdDateTime, DateTime updatedDateTime, List<MenuSection> sections) : base(menuId)
         {
             Name = name;
             Description = description;
@@ -22,11 +22,12 @@ namespace BuberDinner.Domain.Menu
             HostId = hostId;
             CreatedDateTime = createdDateTime;
             UpdatedDateTime = updatedDateTime;
+            _sections = sections;
         }
 
-        public static Menu Create(string name, string description, AverageRating averageRating, HostId hostId, DateTime createdDateTime, DateTime updatedDateTime)
+        public static Menu Create(string name, string description, HostId hostId, List<MenuSection> sections)
         {
-            return new(MenuId.CreateUnique(), name, description, averageRating, hostId, createdDateTime, updatedDateTime);
+            return new(MenuId.CreateUnique(), name, description, AverageRating.CreateNew(), hostId, DateTime.Now, DateTime.Now, sections);
         }
 
         public string Name { get; }
