@@ -25,5 +25,9 @@ namespace BuberDinner.Domain.Menu.ValueObjects
         {
             return new(Guid.NewGuid());
         }
+        public static MenuItemId Create(Guid id)
+        {
+            return new(id);
+        }
     }
 }

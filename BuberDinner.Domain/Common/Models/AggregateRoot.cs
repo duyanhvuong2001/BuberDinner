@@ -12,5 +12,10 @@ namespace BuberDinner.Domain.Common.Models
         {
 
         }
+
+        protected AggregateRoot()
+        {
+
+        }
     }
 }

@@ -7,6 +7,10 @@ namespace BuberDinner.Domain.Menu.Entities
     {
         private readonly List<MenuItem> _items;
 
+        private MenuSection()
+        {
+
+        }
         private MenuSection(MenuSectionId id, string name, string description, List<MenuItem> items) : base(id)
         {
             Name = name;

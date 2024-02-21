@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using BuberDinner.Infrastructure.Persistence.Repositories;
+using BuberDinner.Infrastructure.Persistence.Connections;
 
 namespace BuberDinner.Infrastructure
 {
@@ -24,17 +27,17 @@ namespace BuberDinner.Infrastructure
 
             services
                 .AddAuth(configuration)
-                .AddPersistence();
+                .AddPersistence(configuration);
 
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             return services;
         }
 
-        public static IServiceCollection AddPersistence(this IServiceCollection services)
+        public static IServiceCollection AddPersistence(this IServiceCollection services, ConfigurationManager configuration)
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMenuRepository, MenuRepository>();
-
+            services.AddDbContext<BuberDinnerDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(SqlServerSettings.SectionName)));
             return services;
         }
 

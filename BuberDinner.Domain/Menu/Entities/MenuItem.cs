@@ -7,6 +7,10 @@ namespace BuberDinner.Domain.Menu.Entities
     {
         public string Name { get; }
 
+        private MenuItem()
+        {
+
+        }
         public string Description { get; }
 
         private MenuItem(MenuItemId id, string name, string description) : base(id)
