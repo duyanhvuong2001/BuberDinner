@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BuberDinner.Domain.Dinner
 {
-    public sealed class Dinner : AggregateRoot<DinnerId>
+    public sealed class Dinner : AggregateRoot<DinnerId, Guid>
     {
         private readonly List<DinnerReservation> _reservations = new();
         private Dinner(DinnerId id, string name, string description, DateTime startDateTime, DateTime startedDateTime, DateTime endDateTime, DateTime endedDateTime, DateTime createdDateTime, DateTime updatedDateTime, bool isPublic, int maxGuests, DinnerStatus status, Price price, HostId hostId, MenuId menuId, string imageURL, DinnerLocation location) : base(id)

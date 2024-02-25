@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BuberDinner.Domain.User
 {
-    public sealed class User : AggregateRoot<UserId>
+    public sealed class User : AggregateRoot<UserId, Guid>
     {
         private User(UserId id, string firstName, string lastName, string email, DateTime createdDateTime, DateTime updatedDateTime) : base(id)
         {

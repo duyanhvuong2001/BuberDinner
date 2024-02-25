@@ -29,8 +29,8 @@ namespace BuberDinner.Infrastructure.Persistence.Configs
                 menuReviewIdsBuilder.HasKey("Id");
 
                 menuReviewIdsBuilder.Property(d => d.Value)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ReviewId");
+                    .HasColumnName("ReviewId")
+                    .ValueGeneratedNever();
 
 
             });
@@ -50,8 +50,8 @@ namespace BuberDinner.Infrastructure.Persistence.Configs
                 dinnerIdBuilder.HasKey("Id");
 
                 dinnerIdBuilder.Property(d => d.Value)
-                    .ValueGeneratedNever()
-                    .HasColumnName("DinnerId");
+                    .HasColumnName("DinnerId")
+                    .ValueGeneratedNever();
 
 
             });

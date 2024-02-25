@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BuberDinner.Domain.Bill
 {
-    public sealed class Bill : AggregateRoot<BillId>
+    public sealed class Bill : AggregateRoot<BillId, Guid>
     {
         private Bill(BillId id, DinnerId dinnerId, GuestId guestId, HostId hostId, Price price, DateTime createdDateTime, DateTime updateDateTime) : base(id)
         {

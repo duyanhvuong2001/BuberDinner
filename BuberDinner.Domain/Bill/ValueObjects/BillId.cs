@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BuberDinner.Domain.Bill.ValueObjects
 {
-    public class BillId : ValueObject
+    public class BillId : AggregateRootId<Guid>
     {
-        public Guid Value { get; }
+        public override Guid Value { get; protected set; }
 
         private BillId(Guid value)
         {
