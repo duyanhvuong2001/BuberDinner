@@ -21,6 +21,11 @@ namespace BuberDinner.Domain.Dinner.Entities
             BillId = billId;
         }
 
+        private DinnerReservation()
+        {
+
+        }
+
 
         public int GuestCount { get; private set; }
         public ReservationStatus ReservationStatus { get; private set; }

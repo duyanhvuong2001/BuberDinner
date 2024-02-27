@@ -15,6 +15,10 @@ namespace BuberDinner.Domain.Common.ValueObjects
             yield return Value;
         }
 
+        private Rating()
+        {
+
+        }
         private Rating(double value)
         {
             Value = value;

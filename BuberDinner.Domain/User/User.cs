@@ -10,25 +10,35 @@ namespace BuberDinner.Domain.User
 {
     public sealed class User : AggregateRoot<UserId, Guid>
     {
-        private User(UserId id, string firstName, string lastName, string email, DateTime createdDateTime, DateTime updatedDateTime) : base(id)
+        private User(UserId id, string firstName, string lastName, string email, DateTime createdDateTime, DateTime updatedDateTime, Password password) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             CreatedDateTime = createdDateTime;
             UpdatedDateTime = updatedDateTime;
+            Password = password;
         }
 
-        public static User Create(string firstName, string lastName, string email, DateTime createdDateTime, DateTime updatedDateTime)
+        private User()
         {
-            return new(UserId.CreateUnique(), firstName, lastName, email, createdDateTime, updatedDateTime);
+
+        }
+
+        public static User Create(string firstName, string lastName, string email, DateTime createdDateTime, DateTime updatedDateTime, string plainPassword)
+        {
+            return new(UserId.CreateUnique(), firstName, lastName, email, createdDateTime, updatedDateTime, Password.Create(plainPassword));
         }
 
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
+
+        public Password Password { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
+
+
 
     }
 }

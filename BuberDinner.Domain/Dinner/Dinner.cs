@@ -41,6 +41,10 @@ namespace BuberDinner.Domain.Dinner
             return new(DinnerId.CreateUnique(), name, description, startDateTime, startedDateTime, endDateTime, endedDateTime, createdDateTime, updatedDateTime, isPublic, maxGuests, status, price, hostId, menuId, imageURL, location);
         }
 
+        private Dinner()
+        {
+
+        }
         public string Name { get; private set; }
         public string Description { get; private set; }
 

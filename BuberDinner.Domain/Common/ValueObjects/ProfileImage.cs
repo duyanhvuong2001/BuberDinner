@@ -1,14 +1,10 @@
 ﻿using BuberDinner.Domain.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BuberDinner.Domain.Dinner.ValueObjects
+namespace BuberDinner.Domain.Common.ValueObjects
 {
     public sealed class ProfileImage : ValueObject
     {
+
         public string ImageURL { get; private set; }
         public override IEnumerable<object> GetEqualityComponents()
         {
@@ -22,6 +18,11 @@ namespace BuberDinner.Domain.Dinner.ValueObjects
         private ProfileImage(string imageUrl)
         {
             ImageURL = imageUrl;
+        }
+
+        private ProfileImage()
+        {
+
         }
     }
 }

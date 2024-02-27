@@ -1,14 +1,13 @@
 ﻿
 using BuberDinner.Domain.Host.ValueObjects;
 using BuberDinner.Domain.Menu;
-using BuberDinner.Domain.Menu.Entities;
 using BuberDinner.Domain.Menu.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BuberDinner.Infrastructure.Persistence.Configs
 {
-    public class MenuConfigs : IEntityTypeConfiguration<Menu>
+    internal class MenuConfigs : IEntityTypeConfiguration<Menu>
     {
         public void Configure(EntityTypeBuilder<Menu> builder)
         {
@@ -17,6 +16,7 @@ namespace BuberDinner.Infrastructure.Persistence.Configs
             ConfigureMenuDinnerIdsTable(builder);
             ConfigureMenuReviewIdsTable(builder);
         }
+
 
         private void ConfigureMenuReviewIdsTable(EntityTypeBuilder<Menu> builder)
         {
@@ -41,15 +41,15 @@ namespace BuberDinner.Infrastructure.Persistence.Configs
 
         private void ConfigureMenuDinnerIdsTable(EntityTypeBuilder<Menu> builder)
         {
-            builder.OwnsMany(m => m.DinnerIds, dinnerIdBuilder =>
+            builder.OwnsMany(m => m.DinnerIds, dinnerIdsBuilder =>
             {
-                dinnerIdBuilder.ToTable("MenuDinnerIds");
+                dinnerIdsBuilder.ToTable("MenuDinnerIds");
 
-                dinnerIdBuilder.WithOwner().HasForeignKey("MenuId");
+                dinnerIdsBuilder.WithOwner().HasForeignKey("MenuId");
 
-                dinnerIdBuilder.HasKey("Id");
+                dinnerIdsBuilder.HasKey("Id");
 
-                dinnerIdBuilder.Property(d => d.Value)
+                dinnerIdsBuilder.Property(d => d.Value)
                     .HasColumnName("DinnerId")
                     .ValueGeneratedNever();
 

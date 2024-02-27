@@ -23,6 +23,10 @@ namespace BuberDinner.Domain.Common.ValueObjects
             Currency = currency;
         }
 
+        private Price()
+        {
+
+        }
         public static Price CreateNew(double amount, string currency)
         {
             return new(amount, currency);

@@ -28,6 +28,10 @@ namespace BuberDinner.Domain.Guest
             AverageRating = averageRating;
         }
 
+        private Guest()
+        {
+
+        }
         public static Guest Create(DateTime createdDateTime, DateTime updatedDateTime, UserId userId, string firstName, string lastName, ProfileImage profileImage, AverageRating averageRating)
         {
             return new(GuestId.CreateUnique(), createdDateTime, updatedDateTime, userId, firstName, lastName, profileImage, averageRating);
@@ -38,7 +42,7 @@ namespace BuberDinner.Domain.Guest
         public ProfileImage ProfileImage { get; private set; }
 
         public AverageRating AverageRating { get; private set; }
-        public IReadOnlyList<GuestRating> Ratings => _ratings.AsReadOnly();
+
 
         public UserId UserId { get; private set; }
 
@@ -50,5 +54,7 @@ namespace BuberDinner.Domain.Guest
         public IReadOnlyList<DinnerId> UpcomingDinnerIds => _upcomingDinnerIds.AsReadOnly();
         public IReadOnlyList<BillId> BillIds => _billIds.AsReadOnly();
         public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds.AsReadOnly();
+
+        public IReadOnlyList<GuestRating> Ratings => _ratings.AsReadOnly();
     }
 }

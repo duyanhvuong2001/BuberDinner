@@ -16,6 +16,8 @@ namespace BuberDinner.Domain.Dinner.ValueObjects
             Value = value;
         }
 
+
+
         public override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
@@ -24,6 +26,11 @@ namespace BuberDinner.Domain.Dinner.ValueObjects
         public static DinnerReservationId CreateUnique()
         {
             return new(Guid.NewGuid());
+        }
+
+        public static DinnerReservationId Create(Guid id)
+        {
+            return new(id);
         }
     }
 }

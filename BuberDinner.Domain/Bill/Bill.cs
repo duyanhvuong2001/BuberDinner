@@ -4,11 +4,6 @@ using BuberDinner.Domain.Common.ValueObjects;
 using BuberDinner.Domain.Dinner.ValueObjects;
 using BuberDinner.Domain.Guest.ValueObjects;
 using BuberDinner.Domain.Host.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BuberDinner.Domain.Bill
 {
@@ -23,7 +18,10 @@ namespace BuberDinner.Domain.Bill
             CreatedDateTime = createdDateTime;
             UpdateDateTime = updateDateTime;
         }
+        private Bill()
+        {
 
+        }
         public static Bill Create(DinnerId dinnerId, GuestId guestId, HostId hostId, Price price, DateTime createdDateTime, DateTime updateDateTime)
         {
             return new(BillId.CreateUnique(), dinnerId, guestId, hostId, price, createdDateTime, updateDateTime);

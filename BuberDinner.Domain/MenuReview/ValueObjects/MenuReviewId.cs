@@ -20,5 +20,9 @@ namespace BuberDinner.Domain.MenuReview.ValueObjects
         {
             return new(Guid.NewGuid());
         }
+        public static MenuReviewId Create(Guid id)
+        {
+            return new(id);
+        }
     }
 }

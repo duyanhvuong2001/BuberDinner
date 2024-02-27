@@ -21,6 +21,10 @@ namespace BuberDinner.Domain.Dinner.ValueObjects
             yield return Longitude;
         }
 
+        private DinnerLocation()
+        {
+
+        }
         private DinnerLocation(string name, string address, float latitude, float longitude)
         {
             Name = name;

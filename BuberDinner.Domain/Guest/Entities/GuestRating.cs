@@ -3,11 +3,7 @@ using BuberDinner.Domain.Common.ValueObjects;
 using BuberDinner.Domain.Dinner.ValueObjects;
 using BuberDinner.Domain.Guest.ValueObjects;
 using BuberDinner.Domain.Host.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BuberDinner.Domain.Guest.Entities
 {
@@ -22,8 +18,13 @@ namespace BuberDinner.Domain.Guest.Entities
             UpdatedDateTime = updatedDateTime;
         }
 
+        private GuestRating()
+        {
+
+        }
+
         public HostId HostId { get; private set; }
-        public DinnerId DinnerId { get; set; }
+        public DinnerId DinnerId { get; private set; }
         public Rating Rating { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }

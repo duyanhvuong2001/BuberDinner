@@ -25,5 +25,9 @@ namespace BuberDinner.Domain.Guest.ValueObjects
         {
             return new(Guid.NewGuid());
         }
+        public static GuestRatingId Create(Guid id)
+        {
+            return new(id);
+        }
     }
 }

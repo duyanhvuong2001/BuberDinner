@@ -10,6 +10,10 @@ namespace BuberDinner.Domain.MenuReview
 {
     public sealed class MenuReview : AggregateRoot<MenuReviewId, Guid>
     {
+        private MenuReview()
+        {
+
+        }
         private MenuReview(MenuReviewId id, Rating rating, Comment comment, HostId hostId, MenuId menuId, GuestId guestId, DinnerId dinnerId, DateTime createdDateTime, DateTime updatedDateTime) : base(id)
         {
             Rating = rating;

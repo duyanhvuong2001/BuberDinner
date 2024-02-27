@@ -11,6 +11,10 @@ namespace BuberDinner.Domain.MenuReview.ValueObjects
     {
         public string Text { get; }
 
+        private Comment()
+        {
+
+        }
         private Comment(string text)
         {
             Text = text;

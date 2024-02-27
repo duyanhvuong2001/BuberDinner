@@ -1,4 +1,5 @@
-﻿using BuberDinner.Domain.Menu;
+﻿using BuberDinner.Domain.Host;
+using BuberDinner.Domain.Menu;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
@@ -31,6 +32,5 @@ namespace BuberDinner.Infrastructure.Persistence
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Menu> Menus { get; set; } = null!;
     }
 }

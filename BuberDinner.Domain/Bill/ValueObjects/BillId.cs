@@ -26,5 +26,10 @@ namespace BuberDinner.Domain.Bill.ValueObjects
         {
             return new(Guid.NewGuid());
         }
+
+        public static BillId Create(Guid id)
+        {
+            return new(id);
+        }
     }
 }

@@ -11,6 +11,12 @@ namespace BuberDinner.Domain.Host
     {
         private readonly List<MenuId> _menuIds = new();
         private readonly List<DinnerId> _dinnerIds = new();
+
+        private Host()
+        {
+
+        }
+
         private Host(HostId id, string firstName, string lastName, ProfileImage profileImage, AverageRating averageRating, UserId userId, DateTime createdDateTime, DateTime updatedDateTime) : base(id)
         {
             FirstName = firstName;
@@ -34,6 +40,9 @@ namespace BuberDinner.Domain.Host
         public UserId UserId { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
+
+        public IReadOnlyList<MenuId> MenuIds => _menuIds.AsReadOnly();
+        public IReadOnlyList<DinnerId> DinnerIds => _dinnerIds.AsReadOnly();
 
     }
 }
