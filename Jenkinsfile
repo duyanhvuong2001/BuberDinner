@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'my-aspnet-app'
-        DOCKER_COMPOSE_VERSION = '1.29.2'
+        DOCKER_IMAGE_NAME = 'buber-dinner'
     }
 
     stages {
@@ -41,6 +40,8 @@ pipeline {
     }
 
     post {
-        
+        always {
+            echo 'After CI'
+        }
     }
 }
