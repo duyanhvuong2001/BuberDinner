@@ -1,10 +1,10 @@
 ﻿using ErrorOr;
 using MediatR;
 using BuberDinner.Domain.Common.Errors;
-using BuberDinner.Domain.Entities;
 using BuberDinner.Application.Common.Interfaces.Persistence;
 using BuberDinner.Application.Common.Interfaces.Auth;
 using BuberDinner.Application.Auth.Common;
+using BuberDinner.Domain.User;
 
 namespace BuberDinner.Application.Auth.Queries.Login
 {
@@ -27,7 +27,7 @@ namespace BuberDinner.Application.Auth.Queries.Login
             }
 
             //Validate if password is correct
-            if (user.Password != query.Password)
+            if (!user.Password.VerifyPassword(query.Password))
             {
                 return Errors.Auth.InvalidCredentials;
             }

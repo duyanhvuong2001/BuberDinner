@@ -13,10 +13,14 @@ namespace BuberDinner.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+            services.AddMediatR(configuration =>
+            {
+                configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            });
 
             services.AddScoped(typeof(IPipelineBehavior<,>),
                 typeof(ValidationBehavior<,>));
+
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;

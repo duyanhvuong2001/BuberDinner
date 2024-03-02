@@ -1,6 +1,6 @@
 ﻿using BuberDinner.Application.Common.Interfaces.Auth;
 using BuberDinner.Application.Common.Interfaces.Services;
-using BuberDinner.Domain.Entities;
+using BuberDinner.Domain.User;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -29,7 +29,7 @@ namespace BuberDinner.Infrastructure.Auth
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName.ToString()),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())

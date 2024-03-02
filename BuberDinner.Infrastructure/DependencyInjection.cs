@@ -13,6 +13,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using BuberDinner.Infrastructure.Persistence.Repositories;
 using BuberDinner.Infrastructure.Persistence.Connections;
+using BuberDinner.Infrastructure.Persistence.Interceptors;
 
 namespace BuberDinner.Infrastructure
 {
@@ -35,8 +36,10 @@ namespace BuberDinner.Infrastructure
 
         public static IServiceCollection AddPersistence(this IServiceCollection services, ConfigurationManager configuration)
         {
+            services.AddScoped<PublishDomainEventsInterceptor>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<BuberDinnerDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(SqlServerSettings.SectionName)));
             return services;
         }

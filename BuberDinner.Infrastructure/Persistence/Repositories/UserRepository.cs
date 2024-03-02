@@ -1,19 +1,25 @@
 ﻿using BuberDinner.Application.Common.Interfaces.Persistence;
-using BuberDinner.Domain.Entities;
+using BuberDinner.Domain.User;
 
 namespace BuberDinner.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private static readonly List<User> _users = new();
+        private readonly BuberDinnerDbContext _dbContext;
+
+        public UserRepository(BuberDinnerDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void Add(User user)
         {
-            _users.Add(user);
+            _dbContext.Add(user);
         }
 
         public User? GetUserByEmail(string email)
         {
-            return _users.SingleOrDefault(u => u.Email == email);
+            return _dbContext.Users.SingleOrDefault(u => u.Email == email);
         }
     }
 }

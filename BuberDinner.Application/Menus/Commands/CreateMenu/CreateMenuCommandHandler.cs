@@ -11,6 +11,7 @@ namespace BuberDinner.Application.Menus.Commands.CreateMenu
     public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommand, ErrorOr<Menu>>
     {
         private readonly IMenuRepository _menuRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public CreateMenuCommandHandler(IMenuRepository menuRepository)
         {
@@ -35,8 +36,11 @@ namespace BuberDinner.Application.Menus.Commands.CreateMenu
                     ))
                 );
 
-            //Persist Menu
+            //Add to repository
             _menuRepository.Add(menu);
+
+            //Save changes to db
+            await _unitOfWork.SaveChangesAsync();
             //Return Menu
             return menu!;
         }

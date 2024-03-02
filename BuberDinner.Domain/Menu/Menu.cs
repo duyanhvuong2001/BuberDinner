@@ -3,6 +3,7 @@ using BuberDinner.Domain.Common.ValueObjects;
 using BuberDinner.Domain.Dinner.ValueObjects;
 using BuberDinner.Domain.Host.ValueObjects;
 using BuberDinner.Domain.Menu.Entities;
+using BuberDinner.Domain.Menu.Events;
 using BuberDinner.Domain.Menu.ValueObjects;
 using BuberDinner.Domain.MenuReview.ValueObjects;
 
@@ -31,7 +32,11 @@ namespace BuberDinner.Domain.Menu
 
         public static Menu Create(string name, string description, HostId hostId, List<MenuSection> sections)
         {
-            return new(MenuId.CreateUnique(), name, description, AverageRating.CreateNew(), hostId, DateTime.Now, DateTime.Now, sections);
+            var menu = new Menu(MenuId.CreateUnique(), name, description, AverageRating.CreateNew(), hostId, DateTime.Now, DateTime.Now, sections);
+
+            menu.AddDomainEvent(new MenuCreated(menu));
+
+            return menu;
         }
 
         public string Name { get; private set; }

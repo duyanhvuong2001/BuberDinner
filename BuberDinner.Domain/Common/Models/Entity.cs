@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuberDinner.Domain.Common.Models
 {
-    public abstract class Entity<TId> : IEquatable<Entity<TId>>
-        where TId : notnull
+    public abstract class Entity<TId> : IEquatable<Entity<TId>>, IHasDomainEvents
+        where TId : ValueObject
     {
+        private readonly List<IDomainEvent> _domainEvents = new();
         public TId Id { get; protected set; }
+
+
+        [NotMapped]
+        public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
+        public void AddDomainEvent(IDomainEvent domainEvent)
+        {
+            _domainEvents.Add(domainEvent);
+        }
+
 
         protected Entity()
         {
@@ -45,5 +54,9 @@ namespace BuberDinner.Domain.Common.Models
             return Id.GetHashCode();
         }
 
+        public void ClearDomainEvents()
+        {
+            _domainEvents.Clear();
+        }
     }
 }

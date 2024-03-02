@@ -2,7 +2,7 @@
 using BuberDinner.Application.Common.Interfaces.Auth;
 using BuberDinner.Application.Common.Interfaces.Persistence;
 using BuberDinner.Domain.Common.Errors;
-using BuberDinner.Domain.Entities;
+using BuberDinner.Domain.User;
 using ErrorOr;
 using MediatR;
 
@@ -12,11 +12,12 @@ namespace BuberDinner.Application.Auth.Commands.Register
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
-
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -30,16 +31,18 @@ namespace BuberDinner.Application.Auth.Commands.Register
             }
 
             //Create user (generate UID) & persist to db
-            var user = new User
-            {
-                Id = Guid.NewGuid(),
-                FirstName = command.FirstName,
-                LastName = command.LastName,
-                Email = command.Email,
-                Password = command.Password
-            };
+            var user = User.Create(
+                command.FirstName,
+                command.LastName,
+                command.Email,
+                DateTime.Now,
+                DateTime.Now,
+                command.Password
+                );
 
             _userRepository.Add(user);
+
+            await _unitOfWork.SaveChangesAsync();
 
             //Create JWT token
             var token = _jwtTokenGenerator.GenerateToken(user);
