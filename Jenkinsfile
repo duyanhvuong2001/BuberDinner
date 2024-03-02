@@ -6,6 +6,7 @@ pipeline {
             steps {
                 // This stage simulates a build step, you can replace this with your actual build commands
                 echo 'Building...'
+                sh 'docker-compose up --build'
             }
         }
         stage('Test') {
