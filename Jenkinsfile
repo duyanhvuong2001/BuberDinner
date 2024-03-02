@@ -7,6 +7,11 @@ pipeline {
 
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/dotnet/sdk:6.0'
+                }
+            }
             steps {
                 // Checkout your source code from version control
                 checkout scm
@@ -16,6 +21,11 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
+            agent {
+                docker {
+                    image 'docker'
+                }
+            }
             steps {
                 // Build Docker image for ASP.NET application
                 script {
@@ -24,6 +34,11 @@ pipeline {
             }
         }
         stage('Deploy') {
+             agent {
+                docker {
+                    image 'docker'
+                }
+            }
             steps {
                 // Use Docker Compose to run the application
                 script {
