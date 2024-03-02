@@ -23,12 +23,6 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
-            steps {
-                // Run tests if applicable
-                // Example: sh 'dotnet test'
-            }
-        }
         stage('Deploy') {
             steps {
                 // Use Docker Compose to run the application
