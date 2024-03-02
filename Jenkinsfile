@@ -3,6 +3,11 @@ pipeline {
     
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'docker/compose'
+                }
+            }
             steps {
                 // This stage simulates a build step, you can replace this with your actual build commands
                 echo 'Building...'
