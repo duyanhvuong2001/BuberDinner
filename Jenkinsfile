@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'buber-dinner'
+        DOCKER_IMAGE_NAME = 'my-aspnet-app'
+        DOCKER_COMPOSE_VERSION = '1.29.2'
     }
 
     stages {
@@ -11,7 +12,7 @@ pipeline {
                 // Checkout your source code from version control
                 checkout scm
                 
-                // Build ASP.NET application
+                // Build ASP.NET application (replace with your build command)
                 sh 'dotnet build'
             }
         }
@@ -40,11 +41,6 @@ pipeline {
     }
 
     post {
-        always {
-            // Cleanup after execution
-            script {
-               
-            }
-        }
+        
     }
 }
