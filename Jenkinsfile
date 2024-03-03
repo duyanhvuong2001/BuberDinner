@@ -7,28 +7,14 @@ pipeline {
 
     stages {
         stage('Build') {
-            agent {
-                docker {
-                    image 'mcr.microsoft.com/dotnet/sdk:6.0'
-                }
-            }
             steps {
-                // Checkout your source code from version control
-                checkout scm
-                
-                // Build ASP.NET application (replace with your build command)
-                sh 'dotnet build'
-            }
-        }
-        stage('Build Docker Image') {
-            agent any
-            steps {
-                // Build Docker image for ASP.NET application
                 script {
-                    sh "docker build -t $DOCKER_IMAGE_NAME ."
+                    // Build Docker Image
+                    docker.build('buber-dinner:latest', '-f Dockerfile .')
                 }
             }
         }
+        
         stage('Deploy') {
             agent any
             steps {
