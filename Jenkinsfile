@@ -21,24 +21,16 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            agent {
-                docker {
-                    image 'docker'
-                }
-            }
+            agent any
             steps {
                 // Build Docker image for ASP.NET application
                 script {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME .'
+                    sh "docker build -t $DOCKER_IMAGE_NAME ."
                 }
             }
         }
         stage('Deploy') {
-             agent {
-                docker {
-                    image 'docker'
-                }
-            }
+            agent any
             steps {
                 // Use Docker Compose to run the application
                 script {
