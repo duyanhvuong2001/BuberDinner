@@ -20,7 +20,7 @@ pipeline {
             steps {
                 // Use Docker Compose to run the application
                 script {
-                    sh "docker compose up-d"
+                    sh "docker-compose up -d"
                 }
             }
         }
