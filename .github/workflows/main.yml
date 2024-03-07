@@ -1,0 +1,29 @@
+name: Publish 🚀
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore 🔨
+      run: dotnet restore ./src/BuberDinner.sln
+
+    - name: Build 🏗️
+      run: dotnet build ./src/BuberDinner.sln -c Release --no-restore
+
+    - name: Publish 📢
+      run: dotnet publish ./src/BuberDinner.sln -c Release --no-build
+      
