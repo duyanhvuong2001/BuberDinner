@@ -10,6 +10,7 @@ namespace BuberDinner.Api.Common.MappingProfiles
     {
         public void Register(TypeAdapterConfig config)
         {
+            //Auth mapping profiles
             config.NewConfig<RegisterRequest, RegisterCommand>();
 
             config.NewConfig<LoginRequest, LoginQuery>();
@@ -18,6 +19,8 @@ namespace BuberDinner.Api.Common.MappingProfiles
                 .Map(dest => dest.Token, src => src.Token)
                 .Map(dest => dest.Id, src => src.User.Id.Value.ToString())
                 .Map(dest => dest, src => src.User);
+
+
         }
     }
 }
