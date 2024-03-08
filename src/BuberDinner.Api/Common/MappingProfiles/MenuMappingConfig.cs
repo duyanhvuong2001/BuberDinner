@@ -11,6 +11,7 @@ namespace BuberDinner.Api.Common.MappingProfiles
     {
         public void Register(TypeAdapterConfig config)
         {
+            //Menu-related mapping profiles
             config.NewConfig<(CreateMenuRequest request, string hostId), CreateMenuCommand>()
                 .Map(dest => dest.HostId, src => src.hostId)
                 .Map(dest => dest, src => src.request);
