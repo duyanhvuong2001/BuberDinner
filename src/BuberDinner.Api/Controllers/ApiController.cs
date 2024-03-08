@@ -8,6 +8,7 @@ namespace BuberDinner.Api.Controllers
 {
     [ApiController]
     [Authorize]
+    //base controller class
     public class ApiController : Controller
     {
         protected IActionResult Problem(List<Error> errors)
