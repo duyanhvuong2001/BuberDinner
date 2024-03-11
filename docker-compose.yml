@@ -8,17 +8,29 @@ services:
     depends_on:
       - sqlserver
     environment:
-      ConnectionStrings__SqlConnection: "Server=sqlserver;Database=BuberDinner;User Id=SA;Password=Duyanh_6321;Encrypt=false;"
+      - ConnectionStrings__SqlConnection=Server=sqlserver;Database=BuberDinner;User Id=SA;Password=Duyanh_6321;Encrypt=false;
     ports:
       - "443:443"
       - "80:80"
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
     restart: always
-    container_name: sqlserver
+    container_name: buberdinner-sqlserver
     environment:
-      MSSQL_SA_PASSWORD: "Duyanh_6321"
-      ACCEPT_EULA: "Y"
-      MSSQL_PID: "Evaluation"
+      - MSSQL_SA_PASSWORD=Duyanh_6321
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Evaluation
     ports:
       - "1433:1433"
+    volumes:
+      - ./.containers/database:/var/opt/mssql/data
+  buberdinner-idp:
+    image: jboss/keycloak:latest
+    container_name: buberdinner-idp
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    volumes:
+      - ./.containers/identity:/opt/jboss/keycloak/standalone/data
+    ports:
+      - 18080:8080

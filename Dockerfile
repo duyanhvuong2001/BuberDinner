@@ -9,8 +9,8 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ./src ./
-RUN dotnet restore BuberDinner.sln
 COPY . .
+RUN dotnet restore BuberDinner.sln
 WORKDIR "/src/BuberDinner.Api"
 RUN dotnet build "BuberDinner.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
